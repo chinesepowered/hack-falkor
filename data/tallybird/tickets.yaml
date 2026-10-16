@@ -1,0 +1,40 @@
+# Synthetic issue tracker export for the fictional company Tallybird.
+tickets:
+  - {key: SUP-298, title: "Tidewater Freight: every invoice delivered twice since 09:40 UTC", status: done, priority: urgent, reporter: person:wei, assignee: person:marco, created: "2026-06-09", resolved: "2026-06-09", services: [svc:webhook-dispatcher], customers: [cust:tidewater], incident: inc:INC-142,
+     description: "Tidewater reports duplicate invoice.created webhooks and double-booked invoices in their ERP since about 09:40 UTC."}
+  - {key: SUP-301, title: "Granite Labs: duplicate invoice.created webhooks", status: done, priority: urgent, reporter: person:kofi, assignee: person:marco, created: "2026-06-09", resolved: "2026-06-09", services: [svc:webhook-dispatcher], customers: [cust:granite], incident: inc:INC-142,
+     description: "Granite Labs sees each invoice.created event twice."}
+  - {key: PLAT-402, title: "Webhook queue consumer (ADR-007)", status: done, priority: high, reporter: person:marco, assignee: person:marco, created: "2026-06-19", resolved: "2026-06-26", services: [svc:webhook-dispatcher, svc:event-bus],
+     description: "Consume webhook events from the durable delivery queue and retry with exponential backoff for up to 24 hours."}
+  - {key: PLAT-410, title: "Idempotency keys on webhook events", status: done, priority: high, reporter: person:marco, assignee: person:marco, created: "2026-06-19", resolved: "2026-07-03", services: [svc:webhook-dispatcher],
+     description: "Add an Idempotency-Key header to every webhook event so receivers can ignore repeats."}
+  - {key: PLAT-430, title: "OAuth client-credentials flow for API v2", status: done, priority: high, reporter: person:olivia, assignee: person:marco, created: "2026-05-06", resolved: "2026-06-05", services: [svc:auth-service, svc:public-api-gateway],
+     description: "Issue short-lived OAuth tokens for REST API v2 clients (ADR-011)."}
+  - {key: PLAT-438, title: "Token endpoint latency after cache eviction (INC-151)", status: done, priority: high, reporter: person:arjun, assignee: person:marco, created: "2026-08-04", resolved: "2026-08-06", services: [svc:auth-service], incident: inc:INC-151,
+     description: "Warm the signing-key cache on startup and after eviction."}
+  - {key: PLAT-455, title: "Add Deprecation and Sunset headers to v1 responses", status: in_progress, priority: medium, reporter: person:jonas, assignee: person:jonas, created: "2026-09-02", services: [svc:public-api-gateway],
+     description: "Every response from REST API v1 should carry Deprecation and Sunset headers so clients can see the timeline."}
+  - {key: PLAT-461, title: "Self-serve onboarding still issues v1 API keys", status: open, priority: medium, reporter: person:zoe, created: "2026-09-08", services: [svc:onboarding-flow, svc:auth-service],
+     description: "onboarding-flow creates a v1 API key for every new account. It should create OAuth clients for API v2 instead. Blocked on an auth-service owner."}
+  - {key: SUP-311, title: "Bluefin Logistics: API key rotation fails with 401", status: done, priority: high, reporter: person:wei, assignee: person:dana, created: "2026-07-08", resolved: "2026-07-08", services: [svc:auth-service], customers: [cust:bluefin],
+     description: "After rolling their key, Bluefin gets 401 invalid_api_key on every request with the new key in the X-Api-Key header."}
+  - {key: SUP-327, title: "Nimbus Retail: question about webhook retries", status: done, priority: low, reporter: person:kofi, assignee: person:kofi, created: "2026-08-19", resolved: "2026-08-19", services: [svc:webhook-dispatcher], customers: [cust:nimbus],
+     description: "Nimbus asks whether webhook retry behaviour changed after the June incident."}
+  - {key: SUP-340, title: "Orchard Health: confirm v1 support timeline", status: open, priority: high, reporter: person:emma, assignee: person:olivia, created: "2026-09-22", customers: [cust:orchard],
+     description: "Orchard asks for written confirmation that their REST API v1 integration keeps working through 2027, as promised at the February QBR."}
+  - {key: PAY-221, title: "Make ledger posting idempotent per event id", status: done, priority: high, reporter: person:dana, assignee: person:dana, created: "2026-03-15", resolved: "2026-03-27", services: [svc:ledger-service], incident: inc:INC-118,
+     description: "Follow-up from INC-118: ignore duplicate events when posting to the ledger."}
+  - {key: PAY-240, title: "Ledger: multi-currency balances", status: open, priority: medium, reporter: person:priya, created: "2026-07-20", services: [svc:ledger-service],
+     description: "Support balances in more than one currency per account. Was assigned to Dana; unassigned since she left."}
+  - {key: PAY-252, title: "Ledger reconciliation job failed overnight (no owner)", status: open, priority: high, reporter: person:tom, created: "2026-09-29", services: [svc:ledger-service],
+     description: "The nightly reconciliation failed on 2026-09-29. The runbook says to page Dana Okafor, who has left. Needs an owner."}
+  - {key: PAY-260, title: "Invoice line items from usage events", status: in_progress, priority: high, reporter: person:sofia, assignee: person:sofia, created: "2026-08-10", services: [svc:invoicing-service, svc:usage-metering],
+     description: "Turn daily usage aggregates into invoice line items for the UBB pilot."}
+  - {key: DATA-77, title: "Stream usage aggregates to invoicing", status: in_progress, priority: high, reporter: person:rafael, assignee: person:rafael, created: "2026-07-24", services: [svc:usage-metering, svc:invoicing-service],
+     description: "Publish daily, then hourly, per-customer usage aggregates for invoicing-service."}
+  - {key: GROW-58, title: "Usage view in billing-portal", status: in_progress, priority: medium, reporter: person:chloe, assignee: person:omar, created: "2026-07-25", services: [svc:billing-portal],
+     description: "Show live usage and the projected invoice in billing-portal for pilot customers."}
+  - {key: DEVREL-31, title: "Python SDK: default to API v2 and OAuth", status: open, priority: medium, reporter: person:kenji, assignee: person:kenji, created: "2026-05-06", services: [svc:python-sdk],
+     description: "The Python SDK still defaults to REST API v1 with API keys. Switch the default to v2 with OAuth in the next major release."}
+  - {key: DEVREL-35, title: "Node SDK 3.0 on API v2", status: done, priority: medium, reporter: person:elena, assignee: person:elena, created: "2026-06-01", resolved: "2026-07-15", services: [svc:node-sdk],
+     description: "Release Node SDK 3.0, which talks to REST API v2 with OAuth by default."}

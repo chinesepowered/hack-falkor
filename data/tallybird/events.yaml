@@ -1,0 +1,22 @@
+# Messages that can be injected live during the demo ("a change lands").
+# They are NOT part of the seed graph; CapyBrain ingests them through the
+# extraction pipeline at runtime.
+events:
+  - id: evt:v1-sunset
+    label: "Hannah: sunset REST API v1 on Dec 1"
+    channel: chan:announcements
+    author: person:hannah
+    ts: "2026-10-16T09:30:00Z"
+    text: "Heads up everyone: we're switching off REST API v1 on December 1st. Every customer needs to be on API v2 with OAuth by then."
+  - id: evt:webhook-retries
+    label: "Ines: cap webhook retries at 3 attempts"
+    channel: chan:platform
+    author: person:ines
+    ts: "2026-10-16T10:00:00Z"
+    text: "To cut queue costs we're capping webhook retries at 3 attempts within one hour, starting next sprint."
+  - id: evt:marco-moves
+    label: "Hannah: Marco moves to the Data team"
+    channel: chan:announcements
+    author: person:hannah
+    ts: "2026-10-16T11:00:00Z"
+    text: "Marco Rossi is moving to the Data team on November 1st to lead the warehouse rebuild. Platform folks, please plan handovers for webhook-dispatcher."

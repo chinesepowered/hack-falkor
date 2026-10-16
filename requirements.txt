@@ -1,0 +1,8 @@
+falkordb==1.8.0
+fastapi>=0.115
+uvicorn[standard]>=0.30
+openai>=1.40
+fastembed>=0.5
+numpy>=1.26
+pyyaml>=6.0
+python-dotenv>=1.0

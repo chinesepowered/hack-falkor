@@ -1,0 +1,23 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+*.egg-info/
+
+# node
+node_modules/
+frontend/dist/
+
+# local runtime / caches
+.cache/
+.fastembed_cache/
+*.rdb
+*.log
+demo/out/raw/
+demo/out/tmp/

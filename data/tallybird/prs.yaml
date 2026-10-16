@@ -1,0 +1,28 @@
+# Synthetic pull requests for the fictional company Tallybird.
+prs:
+  # ledger-service: almost all of it is Dana's work
+  - {number: 812, repo: ledger-service, title: "Double-entry posting model", author: person:dana, reviewers: [person:marco], services: [svc:ledger-service], merged: "2025-11-20", body: "Implements balanced debit/credit pairs per ADR-003."}
+  - {number: 820, repo: ledger-service, title: "Nightly reconciliation job at 02:00 UTC", author: person:dana, reviewers: [person:marco, person:priya], services: [svc:ledger-service, svc:payments-core], merged: "2025-12-04", body: "Compares ledger balances with payments-core every night."}
+  - {number: 834, repo: ledger-service, title: "Banker's rounding for all amounts", author: person:dana, reviewers: [person:marco], services: [svc:ledger-service], merged: "2026-01-15", body: "Round half to even everywhere, per ADR-003."}
+  - {number: 851, repo: ledger-service, title: "Drift alert at 0.01%", author: person:dana, reviewers: [person:marco], services: [svc:ledger-service], merged: "2026-03-20", body: "Follow-up from INC-118.", fixes: [PAY-221]}
+  - {number: 866, repo: ledger-service, title: "Idempotent posting per event id", author: person:dana, reviewers: [person:sofia], services: [svc:ledger-service], merged: "2026-03-27", body: "Ignore duplicate events when posting.", fixes: [PAY-221]}
+  - {number: 874, repo: ledger-service, title: "ledger-cli reconcile --date", author: person:dana, reviewers: [person:marco, person:sofia], services: [svc:ledger-service], merged: "2026-07-28", body: "Replay reconciliation for a single day."}
+  # auth-service: Dana's key validator
+  - {number: 806, repo: auth-service, title: "API key validator: constant-time compare", author: person:dana, reviewers: [person:marco], services: [svc:auth-service], merged: "2025-10-22", body: "Compare v1 API keys in constant time against an HMAC of the stored secret."}
+  - {number: 841, repo: auth-service, title: "Cache API key lookups for 10 minutes", author: person:dana, reviewers: [person:jonas], services: [svc:auth-service], merged: "2026-02-26", body: "Cuts key validation load on the database by 90%."}
+  # webhooks (ADR-007)
+  - {number: 881, repo: webhook-dispatcher, title: "Deliver webhooks from a durable queue", author: person:marco, reviewers: [person:priya, person:mei], services: [svc:webhook-dispatcher, svc:event-bus], merged: "2026-06-26", body: "Implements ADR-007: queue consumer with exponential backoff for up to 24h.", fixes: [PLAT-402]}
+  - {number: 893, repo: webhook-dispatcher, title: "Idempotency-Key header on every webhook", author: person:marco, reviewers: [person:priya, person:jonas], services: [svc:webhook-dispatcher], merged: "2026-07-03", body: "Receivers can ignore repeated deliveries.", fixes: [PLAT-410]}
+  # OAuth (ADR-011)
+  - {number: 902, repo: auth-service, title: "OAuth client-credentials grant", author: person:marco, reviewers: [person:jonas, person:dana], services: [svc:auth-service, svc:public-api-gateway], merged: "2026-06-05", body: "Short-lived tokens for REST API v2.", fixes: [PLAT-430]}
+  - {number: 915, repo: auth-service, title: "Warm signing-key cache", author: person:marco, reviewers: [person:arjun], services: [svc:auth-service], merged: "2026-08-06", body: "Fixes INC-151 token latency.", fixes: [PLAT-438]}
+  # gateway
+  - {number: 920, repo: public-api-gateway, title: "Deprecation and Sunset headers on v1", author: person:jonas, reviewers: [person:marco], services: [svc:public-api-gateway], state: open, body: "Adds Deprecation headers to every v1 response. Sunset date TBD.", fixes: [PLAT-455]}
+  # usage-based billing squad
+  - {number: 931, repo: usage-metering, title: "Daily usage aggregates per customer and metric", author: person:rafael, reviewers: [person:sofia, person:mei], services: [svc:usage-metering], merged: "2026-07-30", body: "Grain requested by invoicing for UBB line items.", fixes: [DATA-77]}
+  - {number: 936, repo: invoicing-service, title: "Invoice line items from usage (flagged)", author: person:sofia, reviewers: [person:rafael, person:priya], services: [svc:invoicing-service], merged: "2026-08-28", body: "Behind the ubb_line_items flag.", fixes: [PAY-260]}
+  - {number: 940, repo: billing-portal, title: "Usage chart and projected invoice", author: person:omar, reviewers: [person:sofia, person:zoe], services: [svc:billing-portal], merged: "2026-09-05", body: "Design by Maya.", fixes: [GROW-58]}
+  - {number: 944, repo: usage-metering, title: "Hourly aggregation", author: person:rafael, reviewers: [person:omar, person:sofia], services: [svc:usage-metering], merged: "2026-09-24", body: "Billing-portal chart can poll hourly."}
+  # SDKs
+  - {number: 890, repo: tallybird-python, title: "Retry idempotent requests on network errors", author: person:kenji, reviewers: [person:elena], services: [svc:python-sdk], merged: "2026-06-30", body: "Two retries with jitter."}
+  - {number: 925, repo: tallybird-node, title: "Node SDK 3.0: REST API v2 with OAuth by default", author: person:elena, reviewers: [person:kenji], services: [svc:node-sdk], merged: "2026-07-15", body: "Token refresh handled by the client.", fixes: [DEVREL-35]}

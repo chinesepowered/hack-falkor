@@ -1,0 +1,264 @@
+# Tallybird is a FICTIONAL company. Every person, customer and event in this
+# dataset is synthetic and was written for the CapyBrain demo.
+company:
+  name: Tallybird
+  tagline: Invoicing and payments API for B2B platforms
+  domain: tallybird.example
+  fictional: true
+  today: "2026-10-16"
+
+teams:
+  - {id: team:leadership, name: Leadership}
+  - {id: team:platform, name: Platform Engineering}
+  - {id: team:payments, name: Payments Engineering}
+  - {id: team:data, name: Data Engineering}
+  - {id: team:growth, name: Growth}
+  - {id: team:devrel, name: Developer Experience}
+  - {id: team:support, name: Customer Support}
+  - {id: team:sales, name: Sales & Account Management}
+
+# status: active | departed. Dates are ISO strings.
+people:
+  # Leadership
+  - {id: person:grace, name: Grace Kim, handle: grace, title: CEO, team: team:leadership, joined: "2021-03-01"}
+  - {id: person:sam, name: Sam Patel, handle: sam, title: CTO, team: team:leadership, manager: person:grace, joined: "2021-03-01"}
+  - {id: person:hannah, name: Hannah Lee, handle: hannah, title: VP Engineering, team: team:leadership, manager: person:sam, joined: "2022-01-10"}
+  # Platform
+  - {id: person:ines, name: Inés Navarro, handle: ines, title: "Engineering Manager, Platform", team: team:platform, manager: person:hannah, joined: "2022-06-01"}
+  - {id: person:marco, name: Marco Rossi, handle: marco, title: Senior Engineer, team: team:platform, manager: person:ines, joined: "2022-02-14"}
+  - {id: person:olivia, name: Olivia Grant, handle: olivia, title: "Product Manager, Platform", team: team:platform, manager: person:ines, joined: "2023-04-03"}
+  - {id: person:jonas, name: Jonas Weber, handle: jonas, title: Engineer, team: team:platform, manager: person:ines, joined: "2023-09-18"}
+  - {id: person:mei, name: Mei Tanaka, handle: mei, title: Engineer, team: team:platform, manager: person:ines, joined: "2024-01-08"}
+  - {id: person:arjun, name: Arjun Mehta, handle: arjun, title: Site Reliability Engineer, team: team:platform, manager: person:ines, joined: "2023-02-20"}
+  - {id: person:felix, name: Felix Wagner, handle: felix, title: Engineer, team: team:platform, manager: person:ines, joined: "2021-09-01", status: departed, left: "2026-03-31"}
+  # Payments
+  - {id: person:tom, name: Tom Becker, handle: tom, title: "Engineering Manager, Payments", team: team:payments, manager: person:hannah, joined: "2024-05-06"}
+  - {id: person:priya, name: Priya Raman, handle: priya, title: Staff Engineer, team: team:payments, manager: person:tom, joined: "2021-11-15"}
+  - {id: person:dana, name: Dana Okafor, handle: dana, title: Staff Engineer, team: team:payments, manager: person:tom, joined: "2021-05-03", status: departed, left: "2026-08-28"}
+  - {id: person:sofia, name: Sofia Martins, handle: sofia, title: Engineer, team: team:payments, manager: person:tom, joined: "2023-07-10"}
+  - {id: person:liam, name: Liam O'Connor, handle: liam, title: Engineer, team: team:payments, manager: person:tom, joined: "2024-03-04"}
+  - {id: person:nadia, name: Nadia Haddad, handle: nadia, title: Engineer, team: team:payments, manager: person:tom, joined: "2026-09-14"}
+  # Data
+  - {id: person:ben, name: Ben Carter, handle: ben, title: "Engineering Manager, Data", team: team:data, manager: person:hannah, joined: "2023-01-09"}
+  - {id: person:rafael, name: Rafael Silva, handle: rafael, title: Data Engineer, team: team:data, manager: person:ben, joined: "2023-08-21"}
+  - {id: person:yuki, name: Yuki Mori, handle: yuki, title: Data Engineer, team: team:data, manager: person:ben, joined: "2024-02-12"}
+  - {id: person:ana, name: Ana Costa, handle: ana, title: Analytics Engineer, team: team:data, manager: person:ben, joined: "2025-01-13"}
+  # Growth
+  - {id: person:chloe, name: Chloe Dubois, handle: chloe, title: "Product Manager, Growth", team: team:growth, manager: person:hannah, joined: "2023-03-13"}
+  - {id: person:omar, name: Omar Farouk, handle: omar, title: Frontend Engineer, team: team:growth, manager: person:chloe, joined: "2023-10-02"}
+  - {id: person:zoe, name: Zoe Fischer, handle: zoe, title: Engineer, team: team:growth, manager: person:chloe, joined: "2024-06-17"}
+  - {id: person:maya, name: Maya Cohen, handle: maya, title: Product Designer, team: team:growth, manager: person:chloe, joined: "2024-08-05"}
+  # Developer Experience
+  - {id: person:kenji, name: Kenji Sato, handle: kenji, title: Developer Advocate, team: team:devrel, manager: person:hannah, joined: "2022-10-03"}
+  - {id: person:elena, name: Elena Petrova, handle: elena, title: SDK Engineer, team: team:devrel, manager: person:kenji, joined: "2024-04-22"}
+  # Support
+  - {id: person:rosa, name: Rosa Jiménez, handle: rosa, title: Support Lead, team: team:support, manager: person:grace, joined: "2022-04-11"}
+  - {id: person:wei, name: Wei Zhang, handle: wei, title: Support Engineer, team: team:support, manager: person:rosa, joined: "2023-05-15"}
+  - {id: person:kofi, name: Kofi Mensah, handle: kofi, title: Support Specialist, team: team:support, manager: person:rosa, joined: "2024-09-09"}
+  # Sales
+  - {id: person:aisha, name: Aisha Bello, handle: aisha, title: Head of Sales, team: team:sales, manager: person:grace, joined: "2022-03-07"}
+  - {id: person:lucas, name: Lucas Moreau, handle: lucas, title: Account Manager, team: team:sales, manager: person:aisha, joined: "2023-06-05"}
+  - {id: person:emma, name: Emma Nakamura, handle: emma, title: Account Manager, team: team:sales, manager: person:aisha, joined: "2023-11-20"}
+  - {id: person:diego, name: Diego Alvarez, handle: diego, title: Account Manager, team: team:sales, manager: person:aisha, joined: "2024-07-01"}
+
+apis:
+  - id: api:rest-v1
+    name: REST API v1
+    aliases: [REST API v1, API v1, v1 API, REST v1, v1 endpoints, "/v1", API keys, API key, X-Api-Key, v1 keys, v1 key]
+    auth: API key in the X-Api-Key header
+    status: deprecated
+  - id: api:rest-v2
+    name: REST API v2
+    aliases: [REST API v2, API v2, v2 API, REST v2, "/v2", OAuth, OAuth 2.0, client credentials]
+    auth: OAuth 2.0 client credentials
+    status: ga
+  - id: api:webhooks
+    name: Webhooks API
+    aliases: [Webhooks API, webhooks, webhook events, webhook deliveries]
+    status: ga
+
+# owner = person who owns the service day to day. owner_until marks an owner who left
+# without a replacement being assigned.
+services:
+  - id: svc:public-api-gateway
+    name: public-api-gateway
+    aliases: [public-api-gateway, api gateway, API gateway, gateway]
+    team: team:platform
+    owner: person:jonas
+    tier: 1
+    description: Edge gateway that routes REST API v1 and v2 traffic.
+    depends_on: [svc:auth-service, svc:payments-core, svc:invoicing-service]
+    exposes: [api:rest-v1, api:rest-v2]
+  - id: svc:auth-service
+    name: auth-service
+    aliases: [auth-service, auth service, key validator, API key validator, token endpoint]
+    team: team:platform
+    owner: person:dana
+    owner_until: "2026-08-28"
+    tier: 1
+    description: Validates v1 API keys and issues OAuth tokens for v2.
+    depends_on: [svc:event-bus]
+    authenticates: [api:rest-v1, api:rest-v2]
+  - id: svc:webhook-dispatcher
+    name: webhook-dispatcher
+    aliases: [webhook-dispatcher, webhook dispatcher, dispatcher, webhook queue]
+    team: team:platform
+    owner: person:marco
+    tier: 1
+    description: Delivers webhook events to customer endpoints from a durable queue.
+    depends_on: [svc:event-bus]
+    exposes: [api:webhooks]
+  - id: svc:event-bus
+    name: event-bus
+    aliases: [event-bus, event bus]
+    team: team:platform
+    owner: person:mei
+    tier: 1
+    description: Internal event streaming backbone.
+  - id: svc:notification-service
+    name: notification-service
+    aliases: [notification-service, notification service, notifications service]
+    team: team:platform
+    owner: person:arjun
+    tier: 2
+    description: Sends email and in-app notifications.
+    depends_on: [svc:event-bus]
+  - id: svc:payments-core
+    name: payments-core
+    aliases: [payments-core, payments core]
+    team: team:payments
+    owner: person:priya
+    tier: 1
+    description: Captures, refunds and settles payments.
+    depends_on: [svc:ledger-service, svc:event-bus]
+  - id: svc:ledger-service
+    name: ledger-service
+    aliases: [ledger-service, ledger service, the ledger, ledger]
+    team: team:payments
+    owner: person:dana
+    owner_until: "2026-08-28"
+    tier: 1
+    description: Double-entry ledger of every balance movement, reconciled nightly.
+    depends_on: [svc:event-bus]
+  - id: svc:payouts
+    name: payouts
+    aliases: [payouts service, payouts]
+    team: team:payments
+    owner: person:liam
+    tier: 1
+    description: Schedules and executes payouts to merchants.
+    depends_on: [svc:ledger-service, svc:payments-core]
+  - id: svc:invoicing-service
+    name: invoicing-service
+    aliases: [invoicing-service, invoicing service, invoicing]
+    team: team:payments
+    owner: person:sofia
+    tier: 1
+    description: Generates invoices and line items.
+    depends_on: [svc:ledger-service, svc:event-bus, svc:usage-metering]
+  - id: svc:usage-metering
+    name: usage-metering
+    aliases: [usage-metering, usage metering, metering]
+    team: team:data
+    owner: person:rafael
+    tier: 2
+    description: Aggregates billable usage events per customer.
+    depends_on: [svc:event-bus]
+  - id: svc:analytics-pipeline
+    name: analytics-pipeline
+    aliases: [analytics-pipeline, analytics pipeline, warehouse]
+    team: team:data
+    owner: person:yuki
+    tier: 3
+    description: Batch pipeline feeding the analytics warehouse.
+    depends_on: [svc:event-bus]
+  - id: svc:billing-portal
+    name: billing-portal
+    aliases: [billing-portal, billing portal]
+    team: team:growth
+    owner: person:omar
+    tier: 2
+    description: Customer-facing web app for invoices and plans.
+    depends_on: [svc:public-api-gateway]
+    calls: [api:rest-v2]
+  - id: svc:onboarding-flow
+    name: onboarding-flow
+    aliases: [onboarding-flow, onboarding flow, self-serve onboarding]
+    team: team:growth
+    owner: person:zoe
+    tier: 2
+    description: Self-serve signup that provisions new accounts and credentials.
+    depends_on: [svc:auth-service]
+    calls: [api:rest-v1]
+  - id: svc:python-sdk
+    name: python-sdk
+    aliases: [python-sdk, Python SDK, tallybird-python]
+    team: team:devrel
+    owner: person:kenji
+    tier: 2
+    description: Official Python client library.
+    calls: [api:rest-v1, api:rest-v2]
+  - id: svc:node-sdk
+    name: node-sdk
+    aliases: [node-sdk, Node SDK, tallybird-node]
+    team: team:devrel
+    owner: person:elena
+    tier: 3
+    description: Official Node.js client library.
+    calls: [api:rest-v2]
+
+# integrations come from the (fictional) CRM / API usage data, not from text.
+customers:
+  - {id: cust:bluefin, name: Bluefin Logistics, aliases: [Bluefin Logistics, Bluefin], arr: 180000, tier: enterprise, account_manager: person:lucas, integrates: [api:rest-v1, api:webhooks]}
+  - {id: cust:orchard, name: Orchard Health, aliases: [Orchard Health, Orchard], arr: 420000, tier: enterprise, account_manager: person:emma, integrates: [api:rest-v1]}
+  - {id: cust:nimbus, name: Nimbus Retail, aliases: [Nimbus Retail, Nimbus], arr: 95000, tier: mid-market, account_manager: person:lucas, integrates: [api:rest-v1, api:webhooks]}
+  - {id: cust:copperleaf, name: Copperleaf Media, aliases: [Copperleaf Media, Copperleaf], arr: 60000, tier: mid-market, account_manager: person:lucas, integrates: [api:rest-v2]}
+  - {id: cust:granite, name: Granite Labs, aliases: [Granite Labs], arr: 75000, tier: mid-market, account_manager: person:lucas, integrates: [api:rest-v2, api:webhooks]}
+  - {id: cust:pinecrest, name: Pinecrest Clinics, aliases: [Pinecrest Clinics, Pinecrest], arr: 140000, tier: enterprise, account_manager: person:emma, integrates: [api:rest-v2]}
+  - {id: cust:brightwater, name: Brightwater Schools, aliases: [Brightwater Schools, Brightwater], arr: 50000, tier: mid-market, account_manager: person:emma, integrates: [api:rest-v2]}
+  - {id: cust:saltmarsh, name: Saltmarsh Analytics, aliases: [Saltmarsh Analytics, Saltmarsh], arr: 110000, tier: enterprise, account_manager: person:emma, integrates: [api:rest-v2, api:webhooks]}
+  - {id: cust:tidewater, name: Tidewater Freight, aliases: [Tidewater Freight, Tidewater], arr: 260000, tier: enterprise, account_manager: person:diego, integrates: [api:rest-v2, api:webhooks]}
+  - {id: cust:harborview, name: Harborview Travel, aliases: [Harborview Travel, Harborview], arr: 85000, tier: mid-market, account_manager: person:diego, integrates: [api:rest-v2]}
+  - {id: cust:kestrel, name: Kestrel Outdoor, aliases: [Kestrel Outdoor, Kestrel], arr: 70000, tier: mid-market, account_manager: person:diego, integrates: [api:rest-v2, api:webhooks]}
+  - {id: cust:larkspur, name: Larkspur Foods, aliases: [Larkspur Foods, Larkspur], arr: 45000, tier: smb, account_manager: person:diego, integrates: [api:rest-v2]}
+
+channels:
+  - {id: chan:announcements, name: announcements}
+  - {id: chan:eng, name: eng}
+  - {id: chan:platform, name: platform}
+  - {id: chan:payments, name: payments}
+  - {id: chan:incidents, name: incidents}
+  - {id: chan:api-help, name: api-help}
+  - {id: chan:sales, name: sales}
+  - {id: chan:support, name: support}
+  - {id: chan:data, name: data}
+  - {id: chan:growth, name: growth}
+  - {id: chan:ubb-pilot, name: ubb-pilot}
+  - {id: chan:random, name: random}
+
+incidents:
+  - id: inc:INC-118
+    key: INC-118
+    title: Ledger reconciliation drift of 0.4%
+    date: "2026-03-14"
+    severity: sev2
+    affected: [svc:ledger-service]
+    resolved_by: person:dana
+    summary: Nightly reconciliation flagged a 0.4% drift after late usage events were double-posted. Dana replayed the day and added a drift alert.
+  - id: inc:INC-142
+    key: INC-142
+    title: Duplicate webhook deliveries caused double invoices
+    date: "2026-06-09"
+    severity: sev1
+    affected: [svc:webhook-dispatcher, svc:invoicing-service]
+    customers: [cust:tidewater, cust:granite]
+    resolved_by: person:marco
+    summary: Synchronous retries after receiver timeouts delivered invoice.created twice; Tidewater Freight and Granite Labs booked every invoice twice for six hours.
+  - id: inc:INC-151
+    key: INC-151
+    title: OAuth token endpoint latency spike
+    date: "2026-08-04"
+    severity: sev3
+    affected: [svc:auth-service]
+    resolved_by: person:marco
+    summary: Token issuance p99 rose to 4s after a cache eviction storm; fixed by warming the signing-key cache.

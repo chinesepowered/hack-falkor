@@ -1,0 +1,121 @@
+# Synthetic Slack export for the fictional company Tallybird.
+# reply_to points at the thread's parent message.
+messages:
+  # ---------------------------------------------------------------- #sales: the Orchard promise
+  - {id: msg:sales-001, channel: chan:sales, author: person:aisha, ts: "2026-02-12T16:20:00Z", text: "Orchard Health renewed for two years! Heads up for platform folks: they run on API v1 with API keys and are under a regulatory change freeze until January 2028, so I committed that v1 keeps working for them through the end of 2027. Emma is adding it to the contract notes."}
+  - {id: msg:sales-002, channel: chan:sales, author: person:emma, ts: "2026-02-12T16:41:00Z", reply_to: msg:sales-001, text: "Done, the v1 commitment is in the CRM and in Orchard's contract notes."}
+  - {id: msg:sales-003, channel: chan:sales, author: person:olivia, ts: "2026-02-12T17:02:00Z", reply_to: msg:sales-001, text: "Noted. I'll make sure the API v2 plan accounts for Orchard."}
+  - {id: msg:sales-004, channel: chan:sales, author: person:diego, ts: "2026-03-20T10:15:00Z", text: "Tidewater Freight expanded to three more regions. Their webhook volume will roughly double next month."}
+  - {id: msg:sales-005, channel: chan:sales, author: person:lucas, ts: "2026-05-28T09:30:00Z", text: "Bluefin Logistics asked whether they need to change anything for the new OAuth API. I told them v1 keeps working for now."}
+  - {id: msg:sales-006, channel: chan:sales, author: person:emma, ts: "2026-09-22T14:05:00Z", text: "Orchard asked us again to confirm their API v1 integration is safe through 2027 (SUP-340). Can someone from platform confirm nothing changed?"}
+  - {id: msg:sales-007, channel: chan:sales, author: person:olivia, ts: "2026-09-22T14:30:00Z", reply_to: msg:sales-006, text: "Nothing has changed: v1 keeps working and there is no sunset date."}
+  - {id: msg:sales-008, channel: chan:sales, author: person:aisha, ts: "2026-10-05T11:00:00Z", text: "Reminder: QBR decks for enterprise accounts are due Friday. Emma has Orchard and Pinecrest, Diego has Tidewater, Lucas has Bluefin."}
+
+  # ---------------------------------------------------------------- #platform: ADR-011, OAuth
+  - {id: msg:platform-001, channel: chan:platform, author: person:olivia, ts: "2026-05-05T15:00:00Z", text: "ADR-011 is merged: API v2 is OAuth-only. v1 API keys are deprecated but keep working, and there is no sunset date yet. Kenji is writing the migration guide."}
+  - {id: msg:platform-002, channel: chan:platform, author: person:kenji, ts: "2026-05-05T15:20:00Z", reply_to: msg:platform-001, text: "Draft of the OAuth migration guide is up. The Python SDK still defaults to v1; DEVREL-31 tracks switching the default."}
+  - {id: msg:platform-003, channel: chan:platform, author: person:dana, ts: "2026-05-05T15:42:00Z", reply_to: msg:platform-001, text: "Heads up: the v1 API key validator in auth-service is fragile. Please don't change it without pinging me."}
+  - {id: msg:platform-004, channel: chan:platform, author: person:marco, ts: "2026-06-19T09:10:00Z", text: "ADR-007 is up: webhooks go through a durable queue on the event-bus with idempotency keys, retried with exponential backoff for up to 24h. Reviews welcome."}
+  - {id: msg:platform-005, channel: chan:platform, author: person:mei, ts: "2026-06-19T09:35:00Z", reply_to: msg:platform-004, text: "Delivery queue is provisioned on the event-bus with 24h retention."}
+  - {id: msg:platform-006, channel: chan:platform, author: person:priya, ts: "2026-06-19T10:02:00Z", reply_to: msg:platform-004, text: "LGTM. Glad we're not asking customers to de-duplicate."}
+  - {id: msg:platform-007, channel: chan:platform, author: person:marco, ts: "2026-07-03T16:00:00Z", text: "PR #893 merged: every webhook now carries an Idempotency-Key header. The queue consumer from PR #881 has been live for a week with zero duplicates."}
+  - {id: msg:platform-008, channel: chan:platform, author: person:arjun, ts: "2026-08-04T07:12:00Z", text: "INC-151: p99 on /oauth/token is at 4 seconds and climbing."}
+  - {id: msg:platform-009, channel: chan:platform, author: person:marco, ts: "2026-08-04T07:40:00Z", reply_to: msg:platform-008, text: "Signing-key cache eviction storm in auth-service. Warmed the cache and p99 is back to 120ms. PR #915 makes the warmup permanent."}
+  - {id: msg:platform-010, channel: chan:platform, author: person:olivia, ts: "2026-10-07T13:00:00Z", text: "From the platform weekly: leadership wants a v1 sunset date this month. v1 is down to 18% of API traffic."}
+  - {id: msg:platform-011, channel: chan:platform, author: person:jonas, ts: "2026-10-07T13:12:00Z", reply_to: msg:platform-010, text: "Deprecation and Sunset headers on v1 responses (PLAT-455) are about half done."}
+  - {id: msg:platform-012, channel: chan:platform, author: person:arjun, ts: "2026-10-07T13:25:00Z", reply_to: msg:platform-010, text: "Also: auth-service has had no owner since Dana left. Key validator alerts route to an empty rotation."}
+  - {id: msg:platform-013, channel: chan:platform, author: person:jonas, ts: "2026-09-02T10:00:00Z", text: "Opened PLAT-455 to add Deprecation and Sunset headers to every v1 response from the gateway."}
+  - {id: msg:platform-014, channel: chan:platform, author: person:zoe, ts: "2026-09-08T11:30:00Z", text: "Question: self-serve onboarding still creates a v1 API key for every new account. Should it create OAuth clients instead?"}
+  - {id: msg:platform-015, channel: chan:platform, author: person:jonas, ts: "2026-09-08T11:52:00Z", reply_to: msg:platform-014, text: "Probably, but auth-service owns credential creation and nobody owns auth-service right now. Filed PLAT-461."}
+
+  # ---------------------------------------------------------------- #incidents: INC-142
+  - {id: msg:incidents-001, channel: chan:incidents, author: person:wei, ts: "2026-06-09T10:02:00Z", text: "Two tickets in 20 minutes: Tidewater Freight (SUP-298) and Granite Labs (SUP-301) both say every invoice.created webhook arrived twice since about 09:40 UTC. Same pattern. Paging platform on-call."}
+  - {id: msg:incidents-002, channel: chan:incidents, author: person:marco, ts: "2026-06-09T10:06:00Z", reply_to: msg:incidents-001, text: "Looking. webhook-dispatcher retries synchronously after receiver timeouts. Tidewater's endpoint is slow, so they get the retry after they already processed the first delivery."}
+  - {id: msg:incidents-003, channel: chan:incidents, author: person:priya, ts: "2026-06-09T10:15:00Z", reply_to: msg:incidents-001, text: "And we send no idempotency key, so they can't tell it's a repeat. Declaring INC-142, sev1: customer money is wrong."}
+  - {id: msg:incidents-004, channel: chan:incidents, author: person:marco, ts: "2026-06-09T10:31:00Z", reply_to: msg:incidents-001, text: "Honest take: synchronous retries can never be exactly-once. We need a durable queue with idempotency keys. I can sketch it."}
+  - {id: msg:incidents-005, channel: chan:incidents, author: person:priya, ts: "2026-06-09T10:40:00Z", reply_to: msg:incidents-001, text: "Could we ask customers to de-duplicate on their side for now?"}
+  - {id: msg:incidents-006, channel: chan:incidents, author: person:diego, ts: "2026-06-09T10:52:00Z", reply_to: msg:incidents-001, text: "Tidewater can't change their receiver this year; their integration is frozen until their ERP migration. Same for a few other enterprise accounts."}
+  - {id: msg:incidents-007, channel: chan:incidents, author: person:hannah, ts: "2026-06-09T11:05:00Z", reply_to: msg:incidents-001, text: "Stop the bleeding first, then let's take queue vs. the other options to Thursday's architecture review."}
+  - {id: msg:incidents-008, channel: chan:incidents, author: person:marco, ts: "2026-06-09T15:45:00Z", reply_to: msg:incidents-001, text: "Synchronous retries disabled and the duplicates stopped. Some deliveries will be dropped until the queue lands."}
+  - {id: msg:incidents-009, channel: chan:incidents, author: person:wei, ts: "2026-06-09T16:10:00Z", reply_to: msg:incidents-001, text: "Thanks! I'll update both customers. Diego is crediting the duplicate invoices."}
+  - {id: msg:incidents-010, channel: chan:incidents, author: person:arjun, ts: "2026-09-29T06:20:00Z", text: "ledger-service reconciliation job failed overnight. Who's on point? The runbook says to page Dana."}
+  - {id: msg:incidents-011, channel: chan:incidents, author: person:wei, ts: "2026-09-29T06:41:00Z", reply_to: msg:incidents-010, text: "I can walk whoever picks it up through the ledger runbook, but I don't have prod access."}
+  - {id: msg:incidents-012, channel: chan:incidents, author: person:tom, ts: "2026-09-29T07:05:00Z", reply_to: msg:incidents-010, text: "Opened PAY-252. We still need a real owner for the ledger."}
+  - {id: msg:incidents-013, channel: chan:incidents, author: person:arjun, ts: "2026-03-14T03:05:00Z", text: "INC-118: ledger drift alert, 0.4% against payments-core after last night's reconciliation."}
+  - {id: msg:incidents-014, channel: chan:incidents, author: person:dana, ts: "2026-03-14T03:30:00Z", reply_to: msg:incidents-013, text: "Late usage events got double-posted after a consumer restart. Replaying the day with ledger-cli reconcile; I'll add a 0.01% drift alert."}
+
+  # ---------------------------------------------------------------- #api-help and #support: v1 keys, webhooks, ledger questions
+  - {id: msg:api-help-001, channel: chan:api-help, author: person:kofi, ts: "2026-04-14T13:00:00Z", text: "A customer asks why their balance lags their invoices by up to a day. Bug?"}
+  - {id: msg:api-help-002, channel: chan:api-help, author: person:wei, ts: "2026-04-14T13:12:00Z", reply_to: msg:api-help-001, text: "Expected behaviour: ledger balances are eventually consistent and the ledger reconciles nightly at 02:00 UTC (ADR-003)."}
+  - {id: msg:api-help-003, channel: chan:api-help, author: person:wei, ts: "2026-07-08T09:20:00Z", text: "Bluefin Logistics can't rotate their API key: 401 invalid_api_key right after rolling it (SUP-311)."}
+  - {id: msg:api-help-004, channel: chan:api-help, author: person:dana, ts: "2026-07-08T09:45:00Z", reply_to: msg:api-help-003, text: "That's the key validator cache in auth-service, 10 minute TTL. Fixed their key by hand; I'll look at shortening the cache."}
+  - {id: msg:api-help-005, channel: chan:api-help, author: person:kofi, ts: "2026-07-10T15:00:00Z", text: "A customer asks how many times we retry webhooks. The webhook integration guide says three synchronous retries. Still right?"}
+  - {id: msg:api-help-006, channel: chan:api-help, author: person:marco, ts: "2026-07-10T15:18:00Z", reply_to: msg:api-help-005, text: "No, that's outdated since ADR-007: we retry from a queue with exponential backoff for up to 24 hours. I'll fix the guide."}
+  - {id: msg:api-help-007, channel: chan:api-help, author: person:kofi, ts: "2026-08-19T10:30:00Z", text: "Nimbus Retail asks whether webhook retries changed after the June incident."}
+  - {id: msg:api-help-008, channel: chan:api-help, author: person:marco, ts: "2026-08-19T10:44:00Z", reply_to: msg:api-help-007, text: "Yes: queued delivery with backoff for up to 24h, and every event has an Idempotency-Key header."}
+  - {id: msg:api-help-009, channel: chan:api-help, author: person:kofi, ts: "2026-10-02T09:10:00Z", text: "Customer sees a negative ledger balance right after a refund. Should I escalate?"}
+  - {id: msg:api-help-010, channel: chan:api-help, author: person:wei, ts: "2026-10-02T09:22:00Z", reply_to: msg:api-help-009, text: "No need: refunds post a reversing entry, so the ledger balance goes negative until the next payout settles."}
+  - {id: msg:api-help-011, channel: chan:api-help, author: person:kofi, ts: "2026-09-16T11:00:00Z", text: "Copperleaf wants to know how to get OAuth credentials for API v2."}
+  - {id: msg:api-help-012, channel: chan:api-help, author: person:kenji, ts: "2026-09-16T11:08:00Z", reply_to: msg:api-help-011, text: "Point them to the OAuth migration guide; the Node SDK handles token refresh for them."}
+  - {id: msg:support-001, channel: chan:support, author: person:rosa, ts: "2026-10-09T08:30:00Z", text: "Escalation: Saltmarsh disputes their ledger totals for September."}
+  - {id: msg:support-002, channel: chan:support, author: person:wei, ts: "2026-10-09T08:52:00Z", reply_to: msg:support-001, text: "Their totals include usage line items from the UBB pilot. The ledger is right; I'll walk them through it."}
+  - {id: msg:support-003, channel: chan:support, author: person:sofia, ts: "2026-10-09T09:05:00Z", reply_to: msg:support-001, text: "Ping me if the usage line items look off."}
+  - {id: msg:support-004, channel: chan:support, author: person:rosa, ts: "2026-06-09T12:00:00Z", text: "Great catch on INC-142 this morning, Wei. That saved us hours."}
+  - {id: msg:support-005, channel: chan:support, author: person:kofi, ts: "2026-08-22T14:00:00Z", text: "Updated the API key rotation macro with the 10 minute cache note."}
+
+  # ---------------------------------------------------------------- #payments: ledger knowledge after Dana
+  - {id: msg:payments-001, channel: chan:payments, author: person:liam, ts: "2026-06-02T10:00:00Z", text: "Do payouts read balances from payments-core or from the ledger?"}
+  - {id: msg:payments-002, channel: chan:payments, author: person:dana, ts: "2026-06-02T10:09:00Z", reply_to: msg:payments-001, text: "Always from the ledger, settled balances only (ADR-003)."}
+  - {id: msg:payments-003, channel: chan:payments, author: person:marco, ts: "2026-06-02T10:20:00Z", reply_to: msg:payments-001, text: "And never mid-reconciliation: payouts waits for the 02:00 ledger job to finish."}
+  - {id: msg:payments-004, channel: chan:payments, author: person:liam, ts: "2026-09-03T09:00:00Z", text: "Who owns the ledger now that Dana's gone?"}
+  - {id: msg:payments-005, channel: chan:payments, author: person:wei, ts: "2026-09-03T09:14:00Z", reply_to: msg:payments-004, text: "Not officially anyone yet. I've been answering ledger questions from support, happy to help. The ledger runbook covers reconciliation."}
+  - {id: msg:payments-006, channel: chan:payments, author: person:tom, ts: "2026-09-03T09:30:00Z", reply_to: msg:payments-004, text: "Working on it. For now ask Wei about ledger behaviour and Marco about the code."}
+  - {id: msg:payments-007, channel: chan:payments, author: person:nadia, ts: "2026-09-15T08:05:00Z", text: "The ledger drift alert fired at 02:10. Is that normal?"}
+  - {id: msg:payments-008, channel: chan:payments, author: person:wei, ts: "2026-09-15T08:17:00Z", reply_to: msg:payments-007, text: "Usually late usage events. Re-run reconciliation for that day with ledger-cli reconcile --date. Dana showed us in her handover."}
+  - {id: msg:payments-009, channel: chan:payments, author: person:nadia, ts: "2026-09-15T08:40:00Z", reply_to: msg:payments-007, text: "That fixed it, thanks Wei!"}
+  - {id: msg:payments-010, channel: chan:payments, author: person:nadia, ts: "2026-10-13T14:00:00Z", text: "Can I switch the ledger to standard rounding? It would simplify multi-currency (PAY-240)."}
+  - {id: msg:payments-011, channel: chan:payments, author: person:wei, ts: "2026-10-13T14:10:00Z", reply_to: msg:payments-010, text: "Careful: banker's rounding was a deliberate choice in ADR-003 and changing it breaks reconciliation. Marco reviewed most of Dana's ledger PRs, loop him in."}
+  - {id: msg:payments-012, channel: chan:payments, author: person:marco, ts: "2026-10-13T14:25:00Z", reply_to: msg:payments-010, text: "+1 to Wei. Let's pair on PAY-240 next week."}
+  - {id: msg:payments-013, channel: chan:payments, author: person:priya, ts: "2026-07-15T09:00:00Z", text: "payments-core refunds now emit payment.refunded events; the ledger consumes them."}
+  - {id: msg:payments-014, channel: chan:payments, author: person:sofia, ts: "2026-08-27T15:00:00Z", text: "invoicing-service now reads balances from the ledger for every invoice preview."}
+
+  # ---------------------------------------------------------------- #eng
+  - {id: msg:eng-001, channel: chan:eng, author: person:dana, ts: "2026-08-28T16:00:00Z", text: "Today is my last day at Tallybird. It's been a wild five years! The ledger runbook is up to date. The auth-service key validator... ask Marco, he reviewed some of it. Thank you all!"}
+  - {id: msg:eng-002, channel: chan:eng, author: person:priya, ts: "2026-08-28T16:05:00Z", reply_to: msg:eng-001, text: "We'll miss you, Dana!"}
+  - {id: msg:eng-003, channel: chan:eng, author: person:tom, ts: "2026-08-28T16:10:00Z", reply_to: msg:eng-001, text: "Thank you Dana! We'll sort out ownership of the ledger and auth-service next week."}
+  - {id: msg:eng-004, channel: chan:eng, author: person:wei, ts: "2026-08-28T16:12:00Z", reply_to: msg:eng-001, text: "Thanks for the handover session!"}
+  - {id: msg:eng-005, channel: chan:eng, author: person:felix, ts: "2026-03-31T17:00:00Z", text: "Last day for me! The event bus topics catalog is in the docs. Bye all, it's been great."}
+  - {id: msg:eng-006, channel: chan:eng, author: person:hannah, ts: "2026-09-01T09:00:00Z", text: "Reminder: architecture reviews are Thursdays at 15:00. Bring an ADR draft, not slides."}
+
+  # ---------------------------------------------------------------- #ubb-pilot: the cross-team squad
+  - {id: msg:ubb-001, channel: chan:ubb-pilot, author: person:chloe, ts: "2026-07-23T09:00:00Z", text: "Welcome to #ubb-pilot! The usage-based billing one-pager is up. Weekly sync on Wednesdays."}
+  - {id: msg:ubb-002, channel: chan:ubb-pilot, author: person:rafael, ts: "2026-07-29T10:00:00Z", text: "usage.recorded is flowing into usage-metering on staging. Sofia, what grain do you need for invoice line items?"}
+  - {id: msg:ubb-003, channel: chan:ubb-pilot, author: person:sofia, ts: "2026-07-29T10:20:00Z", reply_to: msg:ubb-002, text: "Daily, per customer, per metric is perfect."}
+  - {id: msg:ubb-004, channel: chan:ubb-pilot, author: person:rafael, ts: "2026-07-30T16:00:00Z", reply_to: msg:ubb-002, text: "Done in PR #931."}
+  - {id: msg:ubb-005, channel: chan:ubb-pilot, author: person:omar, ts: "2026-08-12T11:00:00Z", text: "First cut of the usage chart in billing-portal. Maya, can you review?"}
+  - {id: msg:ubb-006, channel: chan:ubb-pilot, author: person:maya, ts: "2026-08-12T11:30:00Z", reply_to: msg:ubb-005, text: "Love it. Let's show the projected invoice next to it."}
+  - {id: msg:ubb-007, channel: chan:ubb-pilot, author: person:sofia, ts: "2026-08-27T13:00:00Z", text: "Usage line items are in invoicing-service behind a flag (PR #936). Rafael, can you review?"}
+  - {id: msg:ubb-008, channel: chan:ubb-pilot, author: person:rafael, ts: "2026-08-27T14:10:00Z", reply_to: msg:ubb-007, text: "Reviewed, one nit about timezones."}
+  - {id: msg:ubb-009, channel: chan:ubb-pilot, author: person:chloe, ts: "2026-09-10T09:00:00Z", text: "Saltmarsh is live on staging! Copperleaf next week."}
+  - {id: msg:ubb-010, channel: chan:ubb-pilot, author: person:omar, ts: "2026-09-10T09:05:00Z", reply_to: msg:ubb-009, text: "Let's go!"}
+  - {id: msg:ubb-011, channel: chan:ubb-pilot, author: person:rafael, ts: "2026-09-24T10:00:00Z", text: "Aggregation moved to hourly (PR #944). Omar, the chart can poll hourly now."}
+  - {id: msg:ubb-012, channel: chan:ubb-pilot, author: person:omar, ts: "2026-09-24T10:40:00Z", reply_to: msg:ubb-011, text: "Updated, thanks Rafael."}
+  - {id: msg:ubb-013, channel: chan:ubb-pilot, author: person:sofia, ts: "2026-10-08T15:00:00Z", text: "Heads up: invoicing reads ledger balances and nobody owns ledger-service. That's a risk for UBB GA."}
+  - {id: msg:ubb-014, channel: chan:ubb-pilot, author: person:chloe, ts: "2026-10-08T15:20:00Z", reply_to: msg:ubb-013, text: "Raising it with Hannah this week."}
+  - {id: msg:ubb-015, channel: chan:ubb-pilot, author: person:maya, ts: "2026-10-14T10:00:00Z", text: "Final designs for the usage view are in Figma. Omar, Chloe, Rafael, Sofia: comments by Friday please."}
+
+  # ---------------------------------------------------------------- #data, #growth
+  - {id: msg:data-001, channel: chan:data, author: person:yuki, ts: "2026-08-03T09:00:00Z", text: "analytics-pipeline backfill for July is done."}
+  - {id: msg:data-002, channel: chan:data, author: person:ben, ts: "2026-08-03T09:20:00Z", reply_to: msg:data-001, text: "Thanks Yuki. Ana, can you refresh the revenue dashboard?"}
+  - {id: msg:data-003, channel: chan:data, author: person:ana, ts: "2026-08-03T11:00:00Z", reply_to: msg:data-001, text: "Refreshed."}
+  - {id: msg:data-004, channel: chan:data, author: person:rafael, ts: "2026-09-02T10:00:00Z", text: "usage-metering now publishes hourly aggregates to the warehouse too."}
+  - {id: msg:data-005, channel: chan:data, author: person:yuki, ts: "2026-09-02T10:30:00Z", reply_to: msg:data-004, text: "Nice, I'll wire them into the usage dashboard."}
+  - {id: msg:growth-001, channel: chan:growth, author: person:zoe, ts: "2026-08-20T10:00:00Z", text: "Signup conversion is up 4% since the new onboarding flow shipped."}
+  - {id: msg:growth-002, channel: chan:growth, author: person:chloe, ts: "2026-08-20T10:15:00Z", reply_to: msg:growth-001, text: "Great work Zoe and Maya!"}
+  - {id: msg:growth-003, channel: chan:growth, author: person:omar, ts: "2026-09-30T14:00:00Z", text: "billing-portal moved to the v2 API for invoice listing."}
+
+  # ---------------------------------------------------------------- #announcements, #random
+  - {id: msg:announcements-001, channel: chan:announcements, author: person:hannah, ts: "2026-09-14T09:00:00Z", text: "Please welcome Nadia Haddad to Payments Engineering!"}
+  - {id: msg:announcements-002, channel: chan:announcements, author: person:grace, ts: "2026-10-01T09:00:00Z", text: "Q4 OKRs are posted. The big ones: launch usage-based billing and move integrations to OAuth on API v2."}
+  - {id: msg:random-001, channel: chan:random, author: person:maya, ts: "2026-09-18T12:00:00Z", text: "Someone left a capybara plushie on the third floor. It's wearing a tiny yuzu hat. Who's claiming it?"}
+  - {id: msg:random-002, channel: chan:random, author: person:kofi, ts: "2026-09-18T12:05:00Z", reply_to: msg:random-001, text: "That's the support team's on-call mascot. Please return it, it's very calm under pressure."}
