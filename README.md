@@ -9,10 +9,10 @@
 
 <p align="center">
   <b>Track 03: Company Brain</b> · Graph Hacks 2026 (WeMakeDevs × FalkorDB)<br/>
-  ▶️ <b>Demo video (3 min):</b> <i>YouTube link coming soon</i> · <a href="demo/capybrain-demo.mp4">download the MP4</a>
+  ▶️ <a href="https://www.youtube.com/watch?v=e1h5JVlbJRE"><b>Watch the 3-minute demo on YouTube</b></a>
 </p>
 
-![A change lands: CapyBrain writes the new decision into the graph, catches the conflicts and stale docs, and routes the follow-up work](docs/img/ripple.jpg)
+[![CapyBrain demo video on YouTube: click to watch](docs/img/video-thumb.jpg)](https://www.youtube.com/watch?v=e1h5JVlbJRE)
 
 ## 1. What it is
 
@@ -49,9 +49,11 @@ over text chunks never sees them.
 same model. Asked *"Which customers would break if we switched off API v1?"*, plain RAG finds one customer and says
 it can't see a full list. CapyBrain finds all three, their account managers, and the promise to Orchard Health.
 
-| Ask: every answer is a path | Follow-up work, routed through the graph | Org X-ray |
-|---|---|---|
-| ![Ask](docs/img/ask.jpg) | ![Tasks](docs/img/tasks.jpg) | ![X-ray](docs/img/xray.jpg) |
+| Ask: every answer is a path, with sources | A change lands: conflicts, stale docs and routed follow-ups |
+|---|---|
+| ![Ask: the decision trail lights up on the graph and the original Slack thread opens](docs/img/ask.jpg) | ![A change lands: the ripple timeline, red stale docs and follow-up tasks](docs/img/ripple.jpg) |
+| **Approved tasks are written back to the graph** | **Org X-ray: real working groups and hidden connectors** |
+| ![Approved Task nodes linking the decision to their assignees](docs/img/tasks.jpg) | ![Collaboration graph colored by label propagation group](docs/img/xray.jpg) |
 
 ## 3. How we use FalkorDB
 

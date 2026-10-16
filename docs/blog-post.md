@@ -129,7 +129,8 @@ Other FalkorDB features that made life easy:
 
 ## Try it
 
-`docker compose up`, set an OpenAI-compatible LLM key, and open http://localhost:8000. The repo has the README,
-the full Cypher catalog, an ablation test and a 3-minute narrated demo.
+- **Demo video (3 min):** https://www.youtube.com/watch?v=e1h5JVlbJRE
+- **Code:** https://github.com/chinesepowered/hack-falkor (README, full Cypher catalog, ablation test)
+- **Run it:** `docker compose up --build`, set an OpenAI-compatible LLM key, and open http://localhost:8000.
 
 *Built with heavy help from Claude Code. Tallybird and everyone in it are fictional. Capy is very calm about it.*
