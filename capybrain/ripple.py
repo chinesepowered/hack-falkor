@@ -35,9 +35,10 @@ A message is a decision if it announces something the company will do or stop do
 CONFLICT_SYSTEM = """You compare a NEW company decision with EARLIER decisions and promises from the company graph.
 For each earlier decision choose one relation:
 - "supersedes": the new decision replaces it entirely; it no longer holds.
-- "updates": the new decision changes part of it (for example sets a date it left open); the rest still holds.
-- "conflicts": both cannot be true at the same time, e.g. it breaks a promise made to a customer; a human must resolve it.
+- "updates": the new decision changes part of it (for example sets a date it left open) and respects everything else it promised.
+- "conflicts": both cannot hold at the same time, for example it breaks a promise made to a customer, or it breaks a commitment in the earlier decision such as a minimum notice period; a human must resolve it.
 - "consistent": no tension.
+Check every commitment in the earlier decisions, including dates and notice periods: count the days between the new decision's date and its effective date when a notice period was promised.
 Return JSON only: {"relations": [{"id": "...", "relation": "...", "reason": "one short sentence"}]}"""
 
 STALE_SYSTEM = """You check documentation against a NEW company decision.
@@ -196,8 +197,9 @@ def ingest(text: str, author_id: str, channel_id: str, ts: str | None = None) ->
             return {"relations": []}
         listing = "\n".join(f"- id={r['old']['id']} ({r['old'].get('at')}, by {', '.join(r['by'])}): "
                             f"{r['old']['title']}. {r['old'].get('summary', '')}" for r in cand)
-        return llm.complete_json(CONFLICT_SYSTEM, f"NEW decision ({ts[:10]}): {title}. {summary}\n\nEARLIER:\n{listing}",
-                                 max_tokens=4000, think=True)
+        eff = f", effective {ext['effective_date']}" if ext.get("effective_date") else ""
+        return llm.complete_json(CONFLICT_SYSTEM, f"NEW decision ({ts[:10]}{eff}): {title}. {summary}\n\nEARLIER:\n{listing}",
+                                 max_tokens=900)
 
     def judge_batch(batch):
         listing = "\n".join(f"- id={c['claim']['id']} [{c['doc']['title']}]: {c['claim']['text']}" for c in batch)

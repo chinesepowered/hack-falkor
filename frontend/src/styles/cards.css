@@ -1,0 +1,20 @@
+.card-stage { position: fixed; inset: 0; background: radial-gradient(ellipse at 50% 45%, #1d4640 0%, #0d1a18 72%); color: #fbf3e4; display: flex; align-items: center; justify-content: center; overflow: hidden; font-family: var(--round); }
+.card-stage::before { content: ''; position: absolute; inset: -20%; background-image: radial-gradient(rgba(255, 216, 119, 0.10) 1.5px, transparent 1.6px); background-size: 46px 46px; animation: drift 30s linear infinite; }
+@keyframes drift { to { transform: translate(46px, 46px); } }
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.card-intro { position: relative; text-align: center; display: flex; flex-direction: column; align-items: center; }
+.intro-capy { animation: rise 1.2s ease-out both; }
+.title { font-size: 128px; font-weight: 900; margin: 0; letter-spacing: -2px; line-height: 1; color: #fff4dc; animation: rise 1s ease-out 0.5s both; text-shadow: 0 6px 30px rgba(0, 0, 0, 0.35); }
+.title.small { font-size: 76px; margin-top: 34px; }
+.tagline { font-size: 38px; font-weight: 700; color: #ffd877; margin: 18px 0 0; animation: rise 1s ease-out 1.1s both; }
+.foot { font-family: var(--font); font-size: 22px; color: rgba(235, 245, 242, 0.7); margin-top: 26px; animation: rise 1s ease-out 1.7s both; }
+.card-outro { position: relative; display: flex; align-items: center; gap: 70px; padding: 0 90px; }
+.outro-left { animation: rise 1.2s ease-out both; }
+.kicker { font-size: 26px; font-weight: 800; color: #9fd3c9; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+.feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; max-width: 980px; }
+.feature { background: rgba(255, 255, 255, 0.07); border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 16px; padding: 14px 18px; display: flex; flex-direction: column; animation: rise 0.8s ease-out both; }
+.feature b { font-size: 25px; color: #fff4dc; }
+.feature span { font-family: var(--font); font-size: 19px; color: rgba(235, 245, 242, 0.75); }
+.card-outro .tagline { font-size: 32px; animation-delay: 1.6s; }
+.card-outro .title { animation-delay: 1.4s; }
+.card-outro .foot { animation-delay: 2s; font-size: 20px; }

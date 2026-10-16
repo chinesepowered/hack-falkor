@@ -21,3 +21,4 @@ frontend/dist/
 *.log
 demo/out/raw/
 demo/out/tmp/
+demo/out/

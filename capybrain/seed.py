@@ -317,7 +317,20 @@ def reset() -> None:
     db.graph(config.SEED_GRAPH).copy(config.GRAPH)
 
 
+def wait_for_db(timeout: float = 90.0) -> None:
+    deadline = time.time() + timeout
+    while True:
+        try:
+            db.client().list_graphs()
+            return
+        except Exception:
+            if time.time() > deadline:
+                raise
+            time.sleep(2)
+
+
 def ensure_seeded() -> None:
+    wait_for_db()
     names = set(db.client().list_graphs())
     if config.SEED_GRAPH not in names:
         build(config.SEED_GRAPH)

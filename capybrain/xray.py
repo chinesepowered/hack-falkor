@@ -46,7 +46,18 @@ def xray() -> dict:
     orphaned = [{"id": r["d"]["id"], "name": r["d"]["name"], "authors": [a["name"] for a in r["authors"]],
                  "updated": r["d"].get("updated")} for r in _rows("orphaned_docs")]
 
+    # The collaboration graph itself, for the X-ray view: active people, their teams, groups and centrality.
+    group_of = {m["id"]: c["community"] for c in communities for m in c["members"]}
+    centrality = {r["node"]["id"]: round(r["score"], 1) for r in _rows("connectors", limit=100)}
+    people = [{"id": r["p"]["id"], "type": "Person", "name": r["p"]["name"], "title": r["p"].get("title"),
+               "status": "active", "team": r["team"], "community": group_of.get(r["p"]["id"], -1),
+               "betweenness": centrality.get(r["p"]["id"], 0)}
+              for r in db.to_json(db.run("MATCH (p:Active)-[:MEMBER_OF]->(t:Team) RETURN p, t.name AS team", ro=True))]
+    ties = db.run("MATCH (a:Active)-[c:COLLABORATES]->(b:Active) WHERE a.id < b.id "
+                  "RETURN a.id AS source, 'COLLABORATES' AS type, b.id AS target, c.weight AS weight, c.via AS via", ro=True)
+
     return {
+        "graph": {"nodes": people, "links": ties},
         "communities": communities, "connectors": connectors, "key_docs": key_docs,
         "services": services, "orphaned_docs": orphaned,
         "cypher": {k: Q.Q[k]["cypher"] for k in ("communities", "connectors", "key_docs", "bus_factor", "orphaned_docs")},

@@ -1,0 +1,48 @@
+# Narration for the CapyBrain demo video (ElevenLabs, young female voice "Jessica").
+# Each scene is recorded live by demo/record.js; demo/build_video.py fits the footage to the narration
+# (LLM wait times are shortened, shown with a fast-forward badge).
+voice_id: cgSgspJ2msm6clMCkdW9
+model_id: eleven_v4
+scenes:
+  - id: intro
+    text: >-
+      Every company has a brain. It's just scattered across Slack, tickets, docs, and people's heads.
+      Meet Capy, a company brain built on a FalkorDB graph. She knows everyone, remembers why, and stays calm when things change.
+  - id: graph
+    text: >-
+      This is Tallybird, a fictional payments company. Thirty-three people, fifteen services, twelve customers,
+      and every Slack thread, ticket, pull request, doc and meeting, linked in one graph.
+  - id: why
+    text: >-
+      Ask why, and Capy doesn't guess. She finds the decision, then walks the graph: the incident that triggered it,
+      the architecture review, who decided, the options they rejected, and the pull requests that shipped it.
+      Every claim cites its source. Here's the original Slack thread.
+  - id: who
+    text: >-
+      Who can help with the ledger service? Its owner, Dana, left in August, so Capy won't send you to her.
+      She ranks people by evidence in the graph instead: Marco reviewed most of Dana's ledger code,
+      and Wei, a support engineer, has quietly been answering ledger questions for months.
+  - id: compare
+    text: >-
+      Here's why the graph matters. Plain vector search over the same text finds one customer, and admits it can't see the rest.
+      The graph follows the integration records to all three, their account managers, and a promise Sales made to Orchard Health.
+  - id: ripple
+    text: >-
+      Now, a change lands. Hannah announces that API v1 will be switched off on December first.
+      Capy writes it into the graph as a new decision, and the ripple spreads: five services, three customers, four open tickets.
+      She checks earlier decisions and catches two problems. It breaks the promise to Orchard Health,
+      and it gives customers forty-six days' notice when we promised sixty. Five docs, including the quickstart, are now wrong. They turn red.
+  - id: work
+    text: >-
+      Then Capy does the follow-up. Every task is routed through the graph: doc fixes to their authors,
+      customer notices to account managers, and the auth-service work to Marco, because its owner left.
+      Approve, and the tasks become part of the graph. So when someone asks what's left, there's an answer.
+  - id: xray
+    text: >-
+      Org X-ray runs FalkorDB's built-in algorithms on how people actually work together.
+      Label propagation finds working groups that ignore the org chart. Betweenness finds the hidden connectors.
+      And PageRank shows that the most-cited doc in the company is the stale one.
+  - id: outro
+    text: >-
+      Vector and full-text search to find where to start, Cypher to follow the trail, graph algorithms to see the shape of the company.
+      All in FalkorDB. CapyBrain: knows everyone, remembers why, and stays calm when things change.

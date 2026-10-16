@@ -1,0 +1,142 @@
+/*
+ * Capy mascot animations.
+ * The hooks are classNames set on SVG groups in src/components/Capy.tsx.
+ * SVG transforms need `transform-box: fill-box` so that transform-origin is
+ * measured from each shape's own bounding box (CSS px = SVG user units here).
+ */
+
+/* The yuzu bobs gently, pivoting where it sits on Capy's head. */
+.capy-yuzu {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: capy-yuzu-bob 2.6s ease-in-out infinite;
+}
+
+@keyframes capy-yuzu-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-2.5px) rotate(-3deg);
+  }
+}
+
+/* A slow, sleepy blink roughly every five seconds. */
+.capy-blink {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: capy-blink 5s ease-in-out infinite;
+}
+
+@keyframes capy-blink {
+  0%,
+  93%,
+  100% {
+    transform: scaleY(1);
+  }
+  95.5% {
+    transform: scaleY(0.1);
+  }
+}
+
+/* Thinking dots pulse one after another. Negative delays keep the sequence
+   running from the first frame instead of waiting. */
+.capy-dots > * {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: capy-dot 1.4s ease-in-out infinite;
+}
+.capy-dots > :nth-child(2) {
+  animation-delay: -1.2s;
+}
+.capy-dots > :nth-child(3) {
+  animation-delay: -1s;
+}
+
+@keyframes capy-dot {
+  0%,
+  60%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0) scale(0.85);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-1.5px) scale(1);
+  }
+}
+
+/* Ripples spread out from Capy and fade. Each ripple is the front half of an
+   ellipse, so the top-centre of its box is the ellipse centre. */
+.capy-ripple > * {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+  animation: capy-ripple 2.4s ease-out infinite;
+}
+.capy-ripple > :nth-child(2) {
+  animation-delay: -1.6s;
+}
+.capy-ripple > :nth-child(3) {
+  animation-delay: -0.8s;
+}
+
+@keyframes capy-ripple {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.8;
+  }
+  /* hold most of the strength while the ripple spreads, then fade out */
+  55% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
+
+/* The static art grades the ripples from strong to faint. Once they animate,
+   each ripple fades on its own, so give them all the same strength. */
+@media (prefers-reduced-motion: no-preference) {
+  .capy-ripple > * {
+    stroke-opacity: 0.9;
+  }
+}
+
+/* Steam wisps drift up from the hot spring and fade away. */
+.capy-steam > * {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: capy-steam 3.6s ease-in-out infinite;
+}
+.capy-steam > :nth-child(2) {
+  animation-delay: -1.2s;
+}
+.capy-steam > :nth-child(3) {
+  animation-delay: -2.4s;
+}
+
+@keyframes capy-steam {
+  0% {
+    transform: translateY(6px);
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .capy-yuzu,
+  .capy-blink,
+  .capy-dots > *,
+  .capy-ripple > *,
+  .capy-steam > * {
+    animation: none;
+  }
+}

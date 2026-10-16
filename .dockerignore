@@ -1,0 +1,7 @@
+.env
+.venv
+.cache
+**/node_modules
+frontend/dist
+demo/out
+.git
