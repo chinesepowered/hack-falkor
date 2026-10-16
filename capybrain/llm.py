@@ -75,9 +75,10 @@ def stream_turn(messages: list[dict], tools: list[dict] | None = None, *, max_to
     yield "turn", turn
 
 
-def complete(messages: list[dict], *, max_tokens: int = 1500, temperature: float = 0.2) -> str:
+def complete(messages: list[dict], *, max_tokens: int = 1500, temperature: float = 0.2, think: bool = True) -> str:
+    extra = {} if think else {"extra_body": config.LLM_NO_THINK}
     resp = client().chat.completions.create(model=config.LLM_MODEL, messages=messages,
-                                            max_tokens=max_tokens, temperature=temperature)
+                                            max_tokens=max_tokens, temperature=temperature, **extra)
     return (resp.choices[0].message.content or "").strip()
 
 
@@ -95,12 +96,14 @@ def parse_json(text: str):
     raise ValueError(f"no JSON in model reply: {text[:200]}")
 
 
-def complete_json(system: str, user: str, *, max_tokens: int = 2000):
+def complete_json(system: str, user: str, *, max_tokens: int = 2000, think: bool = False):
+    """JSON-only completion. Thinking is off by default for speed; turn it on for judgement calls
+    (reasoning tokens count against max_tokens, so give those calls a larger budget)."""
     msgs = [{"role": "system", "content": system}, {"role": "user", "content": user}]
-    reply = complete(msgs, max_tokens=max_tokens, temperature=0.0)
+    reply = complete(msgs, max_tokens=max_tokens, temperature=0.0, think=think)
     try:
         return parse_json(reply)
     except ValueError:
         msgs += [{"role": "assistant", "content": reply},
                  {"role": "user", "content": "Reply with valid JSON only, no prose."}]
-        return parse_json(complete(msgs, max_tokens=max_tokens, temperature=0.0))
+        return parse_json(complete(msgs, max_tokens=max_tokens, temperature=0.0, think=False))

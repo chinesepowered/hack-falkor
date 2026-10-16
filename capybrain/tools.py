@@ -340,32 +340,53 @@ def impact_of(ctx: Ctx, subject: str) -> ToolResult:
 
 def open_work(ctx: Ctx, subject: str) -> ToolResult:
     res = ToolResult(data={})
-    x = find_decision(ctx, res, subject) if not resolve(subject, prefer=("Service", "Api")) else None
-    x = x or resolve(subject, prefer=("Decision", "Service", "Api", "Customer"))
-    if not x:
+    entity = resolve(subject, prefer=("Decision", "Api", "Service", "Customer"))
+    decisions: dict[str, dict] = {}
+    if entity and entity["type"] == "Decision":
+        decisions[entity["id"]] = entity
+    elif entity:
+        for r in ctx.run(res, "decisions_with_tasks", id=entity["id"]):
+            decisions[r["d"]["id"]] = r["d"]
+    if not decisions:
+        rows = ctx.run(res, "decision_search", k=1, vec=embeddings.embed(subject))
+        if rows and rows[0]["score"] < 0.3:
+            decisions[rows[0]["node"]["id"]] = rows[0]["node"]
+    if not entity and not decisions:
         res.data = {"error": f"could not find {subject!r}"}
         res.summary = "not found"
         return res
-    res.node(x)
-    tasks = []
-    for r in ctx.run(res, "open_tasks", id=x["id"]):
-        t, p = r["t"], r.get("p")
-        res.node(t), res.link(t, "FOR", x)
-        if p:
-            res.node(p), res.link(t, "ASSIGNED_TO", p)
-        tasks.append({"cite": ctx.cites.add(t), "task": t.get("title"), "kind": t.get("kind"), "status": t.get("status"),
-                      "assignee": p["name"] if p else None, "because": t.get("because")})
-    tickets = []
-    for target in [x] + ([] if x["type"] != "Decision" else
-                         [r["x"] for r in db.to_json(db.run("MATCH (:Decision {id:$id})-[:AFFECTS]->(x) RETURN x", {"id": x["id"]}, ro=True))]):
+    tasks, seen_tasks = [], set()
+    for target in list(decisions.values()) + ([entity] if entity else []):
+        res.node(target)
+        for r in ctx.run(res, "open_tasks", id=target["id"]):
+            t, p = r["t"], r.get("p")
+            if t["id"] in seen_tasks:
+                continue
+            seen_tasks.add(t["id"])
+            res.node(t), res.link(t, "FOR", target)
+            if p:
+                res.node(p), res.link(t, "ASSIGNED_TO", p)
+            tasks.append({"cite": ctx.cites.add(t), "task": t.get("title"), "kind": t.get("kind"),
+                          "status": t.get("status"), "priority": t.get("priority"),
+                          "assignee": p["name"] if p else None, "because": t.get("because")})
+    tickets, ticket_targets = [], [entity] if entity else []
+    for d in decisions.values():
+        ticket_targets += [r["x"] for r in db.to_json(db.run(
+            "MATCH (:Decision {id: $id})-[:AFFECTS]->(x) RETURN x", {"id": d["id"]}, ro=True))]
+    seen_t = set()
+    for target in ticket_targets:
         for r in ctx.run(res, "impact_tickets", id=target["id"]):
             t, p = r["t"], r.get("p")
-            if any(tk["ticket"] == t["name"] for tk in tickets):
+            if t["id"] in seen_t:
                 continue
+            seen_t.add(t["id"])
             res.node(t), res.link(t, "ABOUT", target)
             tickets.append({"cite": ctx.cites.add(t), "ticket": t["name"], "status": t.get("status"),
                             "assignee": p["name"] if p else "unassigned"})
-    res.data = {"subject": {"name": x["name"], "type": x["type"]}, "tasks": tasks, "open_tickets": tickets}
+    res.data = {"subject": {"name": (entity or next(iter(decisions.values())))["name"]},
+                "decisions": [{"cite": ctx.cites.add(d), "decision": d["name"], "date": d.get("at"),
+                               "status": d.get("status")} for d in decisions.values()],
+                "tasks": tasks, "open_tickets": tickets}
     done = sum(1 for t in tasks if t["status"] == "done")
     res.summary = f"{len(tasks)} tasks ({done} done) · {len(tickets)} open tickets"
     return res

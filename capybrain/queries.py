@@ -193,6 +193,12 @@ RETURN DISTINCT t, p, collect(DISTINCT target) AS targets
 ORDER BY t.status, t.created
 """)
 
+DECISIONS_WITH_TASKS = q("decisions_with_tasks", "Decisions affecting X that already have follow-up tasks.", """
+MATCH (:Task)-[:FOR]->(d:Decision)-[:AFFECTS]->(:Entity {id: $id})
+RETURN DISTINCT d
+ORDER BY d.at DESC
+""")
+
 # --------------------------------------------------------------------------- org x-ray (graph algorithms)
 COMMUNITIES = q("communities", "Real working groups: label propagation (CDLP) over the collaboration graph of active people.", """
 CALL algo.labelPropagation({nodeLabels: ['Active'], relationshipTypes: ['COLLABORATES'], maxIterations: 20})

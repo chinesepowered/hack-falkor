@@ -1,4 +1,5 @@
 """Runtime configuration, read from environment variables (and a local .env file)."""
+import json
 import os
 from pathlib import Path
 
@@ -19,6 +20,8 @@ SEED_GRAPH = f"{GRAPH}_seed"
 LLM_BASE_URL = os.getenv("LLM_BASE_URL", "https://api.inference.wandb.ai/v1")
 LLM_API_KEY = os.getenv("LLM_API_KEY", "")
 LLM_MODEL = os.getenv("LLM_MODEL", "Qwen/Qwen3.8-27B")
+# Extra request body that turns off the model's reasoning for fast structured calls (vLLM / Qwen style).
+LLM_NO_THINK = json.loads(os.getenv("LLM_NO_THINK", '{"chat_template_kwargs": {"enable_thinking": false}}'))
 
 EMBED_MODEL = os.getenv("EMBED_MODEL", "BAAI/bge-small-en-v1.5")
 EMBED_DIM = 384

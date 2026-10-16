@@ -298,10 +298,10 @@ def build(graph_name: str) -> dict:
             key = tuple(sorted((a, b)))
             weight[key] += wgt / 2 if label in ("meeting", "decision", "same thread") else wgt
             why[key].add(label)
-    # Keep ties with weight >= 2 (e.g. one code review, or two shared threads/meetings) and store
+    # Keep ties with weight >= 2.5 (e.g. a code review plus a shared thread or meeting) and store
     # them in both directions so the algorithms treat the collaboration graph as undirected.
     ties = [(a, b, {"weight": round(v, 2), "via": ", ".join(sorted(why[(a, b)]))})
-            for (a, b), v in weight.items() if v >= 2.0]
+            for (a, b), v in weight.items() if v >= 2.5]
     w.edges_("COLLABORATES", ties + [(b, a, p) for a, b, p in ties], props=True)
 
     stats = {"nodes": w.nodes, "edges": w.edges, "seconds": round(time.time() - t0, 1)}
