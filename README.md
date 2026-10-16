@@ -42,7 +42,7 @@ and was written for this project.
 
 | Ask: every answer is a path | A change lands: the ripple | Follow-up work, routed through the graph | Org X-ray |
 |---|---|---|---|
-| ![Ask](docs/img/ask.png) | ![Ripple](docs/img/ripple.png) | ![Tasks](docs/img/tasks.png) | ![X-ray](docs/img/xray.png) |
+| ![Ask](docs/img/ask.jpg) | ![Ripple](docs/img/ripple.jpg) | ![Tasks](docs/img/tasks.jpg) | ![X-ray](docs/img/xray.jpg) |
 
 ## What makes the graph essential
 
@@ -217,6 +217,13 @@ cd frontend && npm install && npm run dev     # http://localhost:5173 (proxies /
 
 No Docker? `pip install falkordblite` ships a Redis server with the FalkorDB module:
 `.venv/lib/python3*/site-packages/redislite/bin/redis-server --port 6379 --loadmodule <that dir>/falkordb.so`.
+
+### Deploying
+
+The app is one container plus FalkorDB. On Railway: add FalkorDB from its template (FalkorDB documents this),
+then deploy this repo (it builds from the `Dockerfile`) with `FALKORDB_HOST`/`FALKORDB_PORT`/`FALKORDB_PASSWORD`
+pointing at it and the `LLM_*` variables set. Any Docker host works the same way, as does FalkorDB Cloud for the
+database.
 
 ### Tests
 
